@@ -39,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 //SLOTS
+
 void MainWindow::hw1score(int value) {
     hw1 = value;
    // (ui->label)->setText(QString::number(hw1));
@@ -82,7 +83,7 @@ void MainWindow::scheme_2(){
     scheme1 = false;
 }
 
-void MainWindow::calculate() {
+void MainWindow::calculate() { //calculate homework score and display raw score on the window
  if(scheme1) {
 
      double homeworks = static_cast<double>(hw1) + static_cast<double>(hw2) + static_cast<double>(hw3);
@@ -91,7 +92,7 @@ void MainWindow::calculate() {
      double finall = 0.20*(static_cast<double>(final));
      double finalp = 0.35*(static_cast<double>(final_project));
      raw_score = homework + midterm + finall + finalp + extra_credit;
-     (ui->label)->setText(QString::number(homework));
+    // (ui->label)->setText(QString::number(homework)); // for testing code above
      (ui->label_7)->setText(QString::number(raw_score));
     }
  else if (scheme2) {
