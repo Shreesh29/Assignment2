@@ -15,7 +15,6 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    int hw1;
 
 public slots:
 
@@ -33,7 +32,7 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
-
+    int hw1;
     int hw2;
     int hw3;
     int midterm1;

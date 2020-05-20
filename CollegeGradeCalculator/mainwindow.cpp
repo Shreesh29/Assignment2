@@ -74,23 +74,41 @@ void MainWindow::extracredit(double value){
 
 void MainWindow::scheme_1(){
     scheme1 = true;
+    scheme2 = false;
 }
 
 void MainWindow::scheme_2(){
     scheme2 = true;
+    scheme1 = false;
 }
-
 
 void MainWindow::calculate() {
-if(scheme1 == true) {
+ if(scheme1) {
 
-
+     double homeworks = static_cast<double>(hw1) + static_cast<double>(hw2) + static_cast<double>(hw3);
+     double homework = 25*(homeworks)/300;
+     double midterm = 0.20*(static_cast<double>(midterm1));
+     double finall = 0.20*(static_cast<double>(final));
+     double finalp = 0.35*(static_cast<double>(final_project));
+     raw_score = homework + midterm + finall + finalp + extra_credit;
+     (ui->label)->setText(QString::number(homework));
+     (ui->label_7)->setText(QString::number(raw_score));
     }
-else if (scheme2 == true) {
-
+ else if (scheme2) {
+     double homeworks = static_cast<double>(hw1) + static_cast<double>(hw2) + static_cast<double>(hw3);
+     double finall = 0;
+     double homework = 25*(homeworks)/300;
+     if (midterm1 > final) {
+         finall = 0.30*(static_cast<double>(midterm1));
+     }
+     else {
+         finall = 0.30*(static_cast<double>(final));
+     }
+     double finalp = 0.44*(static_cast<double>(final_project));
+     raw_score = homework + finall + finalp + extra_credit;
+     ui->label_7->setText(QString::number(raw_score));
     }
 }
-
 
 // DESTRUCTOR
 MainWindow::~MainWindow()
