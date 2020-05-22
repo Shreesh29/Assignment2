@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "secondwindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,9 +30,12 @@ public slots:
     void scheme_1();
     void scheme_2();
     void calculate();
+    void calculate2();
+    void open_window();
 
 private:
     Ui::MainWindow *ui;
+    SecondWindow *w2;
     int hw1;
     int hw2;
     int hw3;
