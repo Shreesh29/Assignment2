@@ -32,19 +32,17 @@ MainWindow::MainWindow(QWidget *parent)
      QObject::connect(ui->doubleSpinBox, SIGNAL(valueChanged(double)), this, SLOT(extracredit(double) ));
 
      // Connecting Combobox to open second window
-     QObject::connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this,  SLOT(open_window()) );
+     QObject::connect(ui->comboBox, SIGNAL(activated(int)), this,  SLOT(open_window()) );
 
      //Connecting RadioButtons
      QObject::connect(ui->radioButton, SIGNAL(clicked()), this, SLOT(scheme_1()) );
      QObject::connect(ui->radioButton_2, SIGNAL(clicked()), this, SLOT(scheme_2()) );
 
-
-     // Radio Button calculate
-     QObject::connect(ui->radioButton_3, SIGNAL(clicked()), this, SLOT(calculate2()) );
-
-
      //Connecting CalculateButton
      QObject::connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(calculate()) );
+
+     //Connecting show grade signal
+     QObject::connect(this, SIGNAL(show_grade()), this, SLOT(final_grade()) );
 
 }
 
@@ -52,8 +50,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::hw1score(int value) {
     hw1 = value;
-   //(ui->label)->setText(QString::number(hw1));
-  // (ui->final_Grade)->setText(QString::number(hw1 + hw2 + hw3));
+   //(ui->label)->setText(QString::number(hw1)); TO TEST
+  // (ui->final_Grade)->setText(QString::number(hw1 + hw2 + hw3)); TO TEST
 }
 
 void MainWindow::hw2score(int value) {
@@ -64,7 +62,6 @@ void MainWindow::hw2score(int value) {
 
 void MainWindow::hw3score(int value){
     hw3 = value;
-    //(ui->final_Grade)->setText(QString::number(hw1 + hw2 + hw3));
 }
 
 void MainWindow::midtermscore(int value){
@@ -87,8 +84,6 @@ void MainWindow::extracredit(double value){
 }
 
 void MainWindow::scheme_1(){
-    //raw_score = 25*(static_cast<double>(hw1 + hw2 + hw3))/300 + 0.20*(static_cast<double>(midterm1)) + 0.20*(static_cast<double>(final)) + 0.35*(static_cast<double>(final_project)) + extra_credit;
-    //(ui->label_7)->setText(QString::number(raw_score));
     scheme1 = true;
     scheme2 = false;
 }
@@ -99,32 +94,31 @@ void MainWindow::scheme_2(){
 }
 
 // Radio Button calculate
-void MainWindow::calculate2() {
-    if(scheme1) {
-        raw_score = 25*(static_cast<double>(hw1 + hw2 + hw3))/300 + 0.20*(static_cast<double>(midterm1)) + 0.20*(static_cast<double>(final)) + 0.35*(static_cast<double>(final_project)) + extra_credit;
-         // (ui->label)->setText(QString::number(raw_score)); // TO TEST
-          (ui->label_7)->setText(QString::number(raw_score));
-       }
-    else if (scheme2) { // if user chooses scheme 2
-        double finalp = 0.44*(final_project);
-        if (midterm1 > final) { // if midterm is greater than final
-            double finalp = 0.44*(final_project);
-            raw_score = 25*(static_cast<double>(hw1 + hw2 + hw3))/300 + 0.30*(static_cast<double>(midterm1)) + finalp + extra_credit;
-            ui->label_7->setText(QString::number(raw_score));
-            return;
-           }
-        else { // if midterm is less than final
-            raw_score = 25*(static_cast<double>(hw1 + hw2 + hw3))/300 + 0.30*(static_cast<double>(final)) + finalp + extra_credit;
-            ui->label_7->setText(QString::number(raw_score));
-            return;
-              }
-       }
-    return;
-}
+//void MainWindow::calculate2() {
+//    if(scheme1) {
+//        raw_score = 25*(static_cast<double>(hw1 + hw2 + hw3))/300 + 0.20*(static_cast<double>(midterm1)) + 0.20*(static_cast<double>(final)) + 0.35*(static_cast<double>(final_project)) + extra_credit;
+//         // (ui->label)->setText(QString::number(raw_score)); // TO TEST
+//          (ui->label_7)->setText(QString::number(raw_score));
+//       }
+//    else if (scheme2) { // if user chooses scheme 2
+//        double finalp = 0.44*(final_project);
+//        if (midterm1 > final) { // if midterm is greater than final
+//            double finalp = 0.44*(final_project);
+//            raw_score = 25*(static_cast<double>(hw1 + hw2 + hw3))/300 + 0.30*(static_cast<double>(midterm1)) + finalp + extra_credit;
+//            ui->label_7->setText(QString::number(raw_score));
+//            return;
+//           }
+//        else { // if midterm is less than final
+//            raw_score = 25*(static_cast<double>(hw1 + hw2 + hw3))/300 + 0.30*(static_cast<double>(final)) + finalp + extra_credit;
+//            ui->label_7->setText(QString::number(raw_score));
+//            return;
+//              }
+//       }
+//    return;
+//}
 
 
 void MainWindow::calculate() { //calculate homework score and display raw score on the window
-
  if(scheme1) {
      raw_score = 25*(static_cast<double>(hw1 + hw2 + hw3))/300 + 0.20*(static_cast<double>(midterm1)) + 0.20*(static_cast<double>(final)) + 0.35*(static_cast<double>(final_project)) + extra_credit;
       // (ui->label)->setText(QString::number(raw_score)); // TO TEST
@@ -144,14 +138,33 @@ void MainWindow::calculate() { //calculate homework score and display raw score 
          return;
            }
     }
+ emit show_grade();
  return;
 }
 
-void MainWindow::open_window() {
+void MainWindow::final_grade() {
+    if (raw_score <= 50) {
+        ui->label_8->setText("D");
+    }
+    else if (raw_score > 50 && raw_score < 70) {
+         ui->label_8->setText("C");
+    }
+    else if (raw_score >= 70 && raw_score <80) {
+         ui->label_8->setText("B");
+    }
+    else if (raw_score >= 80 && raw_score < 100) {
+         ui->label_8->setText("A");
+    }
+    else if (raw_score == 100) {
+         ui->label_8->setText("A+");
+    }
+    return;
+}
 
+
+void MainWindow::open_window() {
    w2 = new SecondWindow(this);
    w2->show();
-
 }
 
 // DESTRUCTOR

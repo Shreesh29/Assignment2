@@ -15,6 +15,24 @@ public:
     explicit SecondWindow(QWidget *parent = nullptr);
     ~SecondWindow();
 
+public slots:
+
+    // SLOTS to receive the values for the homework scores
+    void hw1score(int);
+    void hw2score(int);
+    void hw3score(int);
+    void hw4score(int);
+    void hw5score(int);
+    void midterm1score(int);
+    void midterm2score(int);
+    void finalscore(int);
+    void calculate();
+    void final_grade();
+
+signals:
+    void show_grade();
+
+
 private:
     Ui::SecondWindow *ui;
     int hw1;
@@ -26,12 +44,6 @@ private:
     int midterm2;
     int final;
     double raw_score;
-
-
-
-
-
-
 };
 
 #endif // SECONDWINDOW_H

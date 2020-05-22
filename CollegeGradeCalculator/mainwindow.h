@@ -30,8 +30,11 @@ public slots:
     void scheme_1();
     void scheme_2();
     void calculate();
-    void calculate2();
     void open_window();
+    void final_grade();
+
+signals:
+    void show_grade();
 
 private:
     Ui::MainWindow *ui;
@@ -44,7 +47,6 @@ private:
     int final_project;
     double extra_credit;
     double raw_score;
-    char grade;
     bool scheme1;
     bool scheme2;
 
