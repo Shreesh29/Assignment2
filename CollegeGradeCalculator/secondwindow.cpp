@@ -77,9 +77,18 @@ void SecondWindow::final_grade() {
          ui->label_8->setText("C");
     }
     else if (raw_score >= 70 && raw_score <80) {
+         ui->label_8->setText("B-");
+    }
+    else if (raw_score >= 80 && raw_score < 85) {
          ui->label_8->setText("B");
     }
-    else if (raw_score >= 80 && raw_score < 100) {
+    else if (raw_score >= 85 && raw_score < 89) {
+         ui->label_8->setText("B+");
+    }
+    else if (raw_score >= 89 && raw_score < 93) {
+         ui->label_8->setText("A-");
+    }
+    else if (raw_score >= 93 && raw_score < 100) {
          ui->label_8->setText("A");
     }
     else if (raw_score == 100) {
